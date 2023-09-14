@@ -23,12 +23,17 @@ var albums = []album{
 
 func main() {
 	router := gin.Default()
+	router.GET("", healthCheck)
 	router.GET("/albums", getAlbums)
 
 	router.Run()
 }
 
 // getAlbums responds with the list of all albums as JSON.
-func getAlbums(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, albums)
+func getAlbums(gctx *gin.Context) {
+	gctx.IndentedJSON(http.StatusOK, albums)
+}
+
+func healthCheck(gctx *gin.Context) {
+	gctx.JSON(200, map[string]interface{}{"message": "Ok!"})
 }
